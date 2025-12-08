@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    .danger-text {
+        color: red;
+        font-weight: bold;
+    }
+
+    .button-row {
+        margin-top: 10px;
+    }
+</style>
+
+<h2>Delete Book</h2>
+
+<p class="danger-text">Are you sure you want to delete the book "{{ book.title }}"?</p>
+
+<form method="post" class="button-row">
+    {% csrf_token %}
+    <button type="submit">Yes, delete it</button>
+    <a href="{% url 'book_detail' book.id %}">Cancel</a>
+</form>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    .error-list {
+        color: red;
+        list-style-type: disc;
+        margin-left: 20px;
+    }
+
+    .form-field {
+        margin-bottom: 10px;
+    }
+
+    .form-field input,
+    .form-field textarea {
+        width: 250px;
+        max-width: 100%;
+    }
+</style>
+
+<h2>Edit Book</h2>
+
+{% if errors %}
+    <ul class="error-list">
+        {% for error in errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+
+    <p class="form-field">
+        Title:
+        <input type="text" name="title"
+               value="{{ title|default:book.title }}">
+    </p>
+
+    <p class="form-field">
+        Author:
+        <input type="text" name="author"
+               value="{{ author|default:book.author }}">
+    </p>
+
+    <p class="form-field">
+        Year:
+        <input type="text" name="year"
+               value="{{ year|default:book.year }}">
+    </p>
+
+    <p class="form-field">
+        Rating:
+        <input type="text" name="rating"
+               value="{{ rating|default:book.rating }}">
+    </p>
+
+    <p class="form-field">
+        Description:<br>
+        <textarea name="description" rows="4" cols="40">
+{{ description|default:book.description }}
+        </textarea>
+    </p>
+
+    <button type="submit">Update</button>
+</form>
+{% endblock %}
