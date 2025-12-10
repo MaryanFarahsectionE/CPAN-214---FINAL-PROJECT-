@@ -4,14 +4,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.http import HttpResponseForbidden
 
-# TODO (Maryan): create Book model in books/models.py
-
 from .models import Book
 
 def homepage(request):
     books = Book.objects.all()
     context = {
-        "bookstore_name": "Bookstore - Trish & Maryan", # lmk if you wold like to rename
+        "bookstore_name": "Bookstore - Trish & Maryan",
         "books": books,
     }
     return render(request, "homepage.html", context)
@@ -58,13 +56,13 @@ def add_book(request):
                 "description": description,
             })
         
-         # TODO (Maryan): add posted_by = models.ForeignKey(User, ...) in Book model
         book = Book.objects.create(
             title=title,
             author=author,
             year=int(year),
             rating=float(rating),
             description=description,
+            posted_by=request.user,
         )
 
         return redirect("book_detail", book_id=book.id)
@@ -72,10 +70,11 @@ def add_book(request):
     return render(request, "add_book.html")
 
 @login_required
-def edit_book(request,book_id):
+def edit_book(request, book_id):
     book = get_object_or_404(Book, id=book_id)
 
-     # TODO (Maryan): add posted_by field in Book model
+    if book.posted_by != request.user:
+        return HttpResponseForbidden("You can only edit your own books.")
 
     if request.method == "POST":
         title = request.POST.get("title", "").strip()
@@ -129,7 +128,8 @@ def edit_book(request,book_id):
 def delete_book(request, book_id):
     book = get_object_or_404(Book, id=book_id)
 
-     # TODO (Maryan): add posted_by field in Book model
+    if book.posted_by != request.user:
+        return HttpResponseForbidden("You can only delete your own books.")
     
     if request.method == "POST":
         book.delete()

@@ -1,25 +1,16 @@
 {% extends "base.html" %}
 
+{% block title %}Delete Book{% endblock %}
+
 {% block content %}
-
-<style>
-    .danger-text {
-        color: red;
-        font-weight: bold;
-    }
-
-    .button-row {
-        margin-top: 10px;
-    }
-</style>
-
-<h2>Delete Book</h2>
-
-<p class="danger-text">Are you sure you want to delete the book "{{ book.title }}"?</p>
-
-<form method="post" class="button-row">
-    {% csrf_token %}
-    <button type="submit">Yes, delete it</button>
-    <a href="{% url 'book_detail' book.id %}">Cancel</a>
-</form>
+<div style="max-width: 600px;">
+    <h1>Delete Book</h1>
+    <p>Are you sure you want to delete "{{ book.title }}"?</p>
+    
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" style="padding: 0.5rem 1rem; background: #dc3545; color: #fff; border: none; border-radius: 4px; cursor: pointer;">Yes, Delete</button>
+        <a href="{% url 'book_detail' book.id %}" style="display: inline-block; padding: 0.5rem 1rem; background: #666; color: #fff; text-decoration: none; border-radius: 4px; margin-left: 0.5rem;">Cancel</a>
+    </form>
+</div>
 {% endblock %}
