@@ -9,7 +9,7 @@
     <p><strong>Year:</strong> {{ book.year }}</p>
     <p><strong>Rating:</strong> {{ book.rating }}/5</p>
     <p><strong>Posted by:</strong> {{ book.posted_by.username }}</p>
-    <p style="margin-top: 1rem;">{{ book.description }}</p>
+    <p><strong>Description:</strong> {{ book.description }}</p>
     
     <div style="margin-top: 2rem;">
         <a href="{% url 'homepage' %}" style="display: inline-block; padding: 0.5rem 1rem; background: #666; color: #fff; text-decoration: none; border-radius: 4px;">Back to Home</a>

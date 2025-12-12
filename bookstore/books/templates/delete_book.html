@@ -3,14 +3,74 @@
 {% block title %}Delete Book{% endblock %}
 
 {% block content %}
-<div style="max-width: 600px;">
-    <h1>Delete Book</h1>
-    <p>Are you sure you want to delete "{{ book.title }}"?</p>
-    
-    <form method="POST">
-        {% csrf_token %}
-        <button type="submit" style="padding: 0.5rem 1rem; background: #dc3545; color: #fff; border: none; border-radius: 4px; cursor: pointer;">Yes, Delete</button>
-        <a href="{% url 'book_detail' book.id %}" style="display: inline-block; padding: 0.5rem 1rem; background: #666; color: #fff; text-decoration: none; border-radius: 4px; margin-left: 0.5rem;">Cancel</a>
-    </form>
+<style>
+    .delete-wrapper {
+        max-width: 600px;
+        margin: 60px auto 0 auto;
+        text-align: center;
+    }
+
+    .delete-card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px 24px;
+        background-color: #fff;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .delete-card h1 {
+        margin-bottom: 16px;
+    }
+
+    .delete-card p {
+        margin-bottom: 20px;
+    }
+
+    .btn-row {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .btn {
+        min-width: 110px;
+        padding: 8px 18px;
+        border-radius: 4px;
+        border: 1px solid transparent;
+        text-decoration: none;
+        cursor: pointer;
+        display: inline-block;
+    }
+
+    .btn-danger {
+        background: #dc3545;
+        border-color: #dc3545;
+        color: #fff;
+    }
+
+    .btn-secondary {
+        background: #666;
+        border-color: #666;
+        color: #fff;
+    }
+
+    .btn:hover {
+        opacity: 0.9;
+    }
+</style>
+
+<div class="delete-wrapper">
+    <div class="delete-card">
+        <h1>Delete Book</h1>
+        <p>Are you sure you want to delete "{{ book.title }}"?</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="btn-row">
+                <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                <a href="{% url 'book_detail' book.id %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock %}

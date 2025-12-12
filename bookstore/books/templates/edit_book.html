@@ -3,67 +3,119 @@
 {% block content %}
 
 <style>
-    .error-list {
-        color: red;
-        list-style-type: disc;
-        margin-left: 20px;
+    .book-form-wrapper {
+        max-width: 600px;
+        margin: 30px auto 30px auto;
+    }
+
+    .book-form-card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px 24px;
+        background-color: #fff;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .book-form-card h2 {
+        margin-bottom: 16px;
+        text-align: center;
     }
 
     .form-field {
-        margin-bottom: 10px;
+        margin-bottom: 12px;
+    }
+
+    .form-field label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 4px;
     }
 
     .form-field input,
     .form-field textarea {
-        width: 250px;
+        width: 100%;
         max-width: 100%;
+        padding: 6px 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    .error-list {
+        color: red;
+        font-size: 0.85rem;
+        list-style-type: none;
+        padding-left: 0;
+        margin: 0 0 10px 0;
+    }
+
+    .error-list li {
+        margin-bottom: 4px;
+    }
+
+    .book-form-card button {
+        margin-top: 10px;
+        padding: 8px 18px;
+        border-radius: 4px;
+        border: 1px solid #333;
+        background: #333;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .book-form-card button:hover {
+        background: #555;
     }
 </style>
 
-<h2>Edit Book</h2>
+<div class="book-form-wrapper">
+    <div class="book-form-card">
+        <h2>Edit Book</h2>
 
-{% if errors %}
-    <ul class="error-list">
-        {% for error in errors %}
-            <li>{{ error }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
+        {% if errors %}
+            <ul class="error-list">
+                {% for error in errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
 
-<form method="post">
-    {% csrf_token %}
+        <form method="post">
+            {% csrf_token %}
 
-    <p class="form-field">
-        Title:
-        <input type="text" name="title"
-               value="{{ title|default:book.title }}">
-    </p>
+            <div class="form-field">
+                <label for="id_title">Title:</label>
+                <input type="text" name="title" id="id_title"
+                       value="{{ title|default:book.title }}">
+            </div>
 
-    <p class="form-field">
-        Author:
-        <input type="text" name="author"
-               value="{{ author|default:book.author }}">
-    </p>
+            <div class="form-field">
+                <label for="id_author">Author:</label>
+                <input type="text" name="author" id="id_author"
+                       value="{{ author|default:book.author }}">
+            </div>
 
-    <p class="form-field">
-        Year:
-        <input type="text" name="year"
-               value="{{ year|default:book.year }}">
-    </p>
+            <div class="form-field">
+                <label for="id_year">Year:</label>
+                <input type="text" name="year" id="id_year"
+                       value="{{ year|default:book.year }}">
+            </div>
 
-    <p class="form-field">
-        Rating:
-        <input type="text" name="rating"
-               value="{{ rating|default:book.rating }}">
-    </p>
+            <div class="form-field">
+                <label for="id_rating">Rating:</label>
+                <input type="text" name="rating" id="id_rating"
+                       value="{{ rating|default:book.rating }}">
+            </div>
 
-    <p class="form-field">
-        Description:<br>
-        <textarea name="description" rows="4" cols="40">
-{{ description|default:book.description }}
-        </textarea>
-    </p>
+            <div class="form-field">
+                <label for="id_description">Description:</label>
+                <textarea name="description" id="id_description" rows="4">
+                {{ description|default:book.description }}</textarea>
+            </div>
 
-    <button type="submit">Update</button>
-</form>
+            <button type="submit">Update</button>
+        </form>
+    </div>
+</div>
+
 {% endblock %}
